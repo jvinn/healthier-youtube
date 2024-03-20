@@ -3,7 +3,7 @@
   "name": "Hello Extensions lol",
   "description": "Base Level Extension",
   "version": "1.0",
-  "permissions": ["tabs", "scripting", "activeTab", "storage"],
+  "permissions": ["activeTab"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
