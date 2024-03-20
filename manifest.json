@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Hello Extensions lol",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "permissions": ["tabs", "scripting", "activeTab", "storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://www.youtube.com/*"],
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}
