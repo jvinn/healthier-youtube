@@ -5,8 +5,16 @@ let allowedGenres = [
     'Howto & Style',
     'Education',
     'Science & Technology',
+    'People & Blogs'
   ]
 let allowedChannels = [];
+
+// background.js calls this to run whenever the URL changes
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === 'NEW_URL_VISITED') {
+      checkGenreIsAllowed();
+    }
+});
 
 function checkGenreIsAllowed() {
     let genreScript = document.querySelector("#microformat > player-microformat-renderer > script");
@@ -18,6 +26,7 @@ function checkGenreIsAllowed() {
     
         if(!allowedGenres.includes(genre)) {
             console.log(`Genre ${genre} not allowed, closing...`);
+            // alert(`Genre ${genre} not allowed, closing...`);
             
             // Send a message to the background script to close the current tab
             chrome.runtime.sendMessage({ action: "closeTab" });
@@ -25,13 +34,8 @@ function checkGenreIsAllowed() {
     
         else {
             console.log(`Category ${genre} allowed`);
+            alert(`Category ${genre} allowed`);
         }
     }
 }
 
-// Runs whenever the DOM changes (a lot)
-let observer = new MutationObserver(() => {
-    checkGenreIsAllowed(); 
-}).observe(document, {childList: true, subtree: true});
-
-checkGenreIsAllowed();
